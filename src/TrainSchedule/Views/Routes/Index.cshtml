@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Routes Page";
+}
+@model List<TrainSchedule.Models.Route>
+<h2>Find route</h2>
+<hr />
+<form method="get">
+   here will be search form
+
+    <input type="submit" value="Find" />
+</form>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Train</th>
+            <th>Departure country</th>
+            <th>Departure city</th>
+            <th>Departure time</th>
+            <th>Arrival country</th>
+            <th>Arrival city</th>
+            <th>Arrival time</th>
+        </tr>
+    </thead>
+    @foreach(Route route in Model)
+    {
+        <tr>
+            <td>@route.Train.Title</td> 
+            <td>@route.StartLocation.Country</td>
+            <td>@route.StartLocation.Name</td>
+            <td>@route.DepartureTime</td>
+            <td>@route.FinishLocation.Country</td>
+            <td>@route.FinishLocation.Name</td>
+            <td>@route.ArrivalTime</td>                      
+        </tr>
+    }
+</table>

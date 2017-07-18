@@ -8,9 +8,10 @@ using TrainSchedule.Data;
 namespace TrainSchedule.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170718200114_Attribures1")]
+    partial class Attribures1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -246,8 +247,6 @@ namespace TrainSchedule.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("RailwayCarriageCount");
 
                     b.Property<string>("Title")
                         .IsRequired()

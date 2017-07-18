@@ -8,9 +8,10 @@ using TrainSchedule.Data;
 namespace TrainSchedule.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170718192214_Attribures")]
+    partial class Attribures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -195,10 +196,6 @@ namespace TrainSchedule.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("ArrivalTime");
-
-                    b.Property<DateTime>("DepartureTime");
-
                     b.Property<int>("FinishLocationId");
 
                     b.Property<int>("StartLocationId");
@@ -206,12 +203,6 @@ namespace TrainSchedule.Data.Migrations
                     b.Property<int>("TrainId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FinishLocationId");
-
-                    b.HasIndex("StartLocationId");
-
-                    b.HasIndex("TrainId");
 
                     b.ToTable("Routes");
                 });
@@ -224,6 +215,10 @@ namespace TrainSchedule.Data.Migrations
                     b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("ApplicationUserLogin");
+
+                    b.Property<DateTime>("ArrivalTime");
+
+                    b.Property<DateTime>("DepartureTime");
 
                     b.Property<int>("Place");
 
@@ -246,8 +241,6 @@ namespace TrainSchedule.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("RailwayCarriageCount");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -288,21 +281,6 @@ namespace TrainSchedule.Data.Migrations
                     b.HasOne("TrainSchedule.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("TrainSchedule.Models.Route", b =>
-                {
-                    b.HasOne("TrainSchedule.Models.Location", "FinishLocation")
-                        .WithMany()
-                        .HasForeignKey("FinishLocationId");
-
-                    b.HasOne("TrainSchedule.Models.Location", "StartLocation")
-                        .WithMany()
-                        .HasForeignKey("StartLocationId");
-
-                    b.HasOne("TrainSchedule.Models.Train", "Train")
-                        .WithMany()
-                        .HasForeignKey("TrainId");
                 });
 
             modelBuilder.Entity("TrainSchedule.Models.Ticket", b =>

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using TrainSchedule.Data;
 using TrainSchedule.Models;
 using TrainSchedule.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace TrainSchedule
 {
@@ -48,7 +49,15 @@ namespace TrainSchedule
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                // configure identity options
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -82,7 +91,7 @@ namespace TrainSchedule
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            app.UseIdentity();           
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -90,7 +99,7 @@ namespace TrainSchedule
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Routes}/{action=Index}/{id?}");
             });
         }
     }

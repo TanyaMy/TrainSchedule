@@ -8,9 +8,10 @@ using TrainSchedule.Data;
 namespace TrainSchedule.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170718183147_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -177,13 +178,9 @@ namespace TrainSchedule.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 25);
+                    b.Property<string>("Country");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 25);
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -194,10 +191,6 @@ namespace TrainSchedule.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("ArrivalTime");
-
-                    b.Property<DateTime>("DepartureTime");
 
                     b.Property<int>("FinishLocationId");
 
@@ -225,6 +218,10 @@ namespace TrainSchedule.Data.Migrations
 
                     b.Property<string>("ApplicationUserLogin");
 
+                    b.Property<DateTime>("ArrivalTime");
+
+                    b.Property<DateTime>("DepartureTime");
+
                     b.Property<int>("Place");
 
                     b.Property<decimal>("Price");
@@ -247,11 +244,7 @@ namespace TrainSchedule.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("RailwayCarriageCount");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 25);
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -262,47 +255,55 @@ namespace TrainSchedule.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
                         .WithMany("Claims")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("TrainSchedule.Models.ApplicationUser")
                         .WithMany("Claims")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("TrainSchedule.Models.ApplicationUser")
                         .WithMany("Logins")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TrainSchedule.Models.ApplicationUser")
                         .WithMany("Roles")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TrainSchedule.Models.Route", b =>
                 {
                     b.HasOne("TrainSchedule.Models.Location", "FinishLocation")
                         .WithMany()
-                        .HasForeignKey("FinishLocationId");
+                        .HasForeignKey("FinishLocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TrainSchedule.Models.Location", "StartLocation")
                         .WithMany()
-                        .HasForeignKey("StartLocationId");
+                        .HasForeignKey("StartLocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TrainSchedule.Models.Train", "Train")
                         .WithMany()
-                        .HasForeignKey("TrainId");
+                        .HasForeignKey("TrainId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TrainSchedule.Models.Ticket", b =>
@@ -313,7 +314,8 @@ namespace TrainSchedule.Data.Migrations
 
                     b.HasOne("TrainSchedule.Models.Route", "Route")
                         .WithMany()
-                        .HasForeignKey("RouteId");
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
